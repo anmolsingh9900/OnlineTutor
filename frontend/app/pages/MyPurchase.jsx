@@ -25,7 +25,7 @@ function MyPurchase() {
       }
 
       const encodedEmail = encodeURIComponent(email);
-      const res = await axios.get(`http://localhost:5001/api/users/purchases/${encodedEmail}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/purchases/${encodedEmail}`);
       
       setPurchases(res.data.purchasedCourses || []);
     } catch (err) {

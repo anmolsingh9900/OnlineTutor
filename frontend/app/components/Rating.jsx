@@ -20,7 +20,7 @@ function Rating({ tutorEmail, tutorName, courseId, courseName, studentEmail, stu
     try {
       // Get student's existing rating
       const myRatingRes = await axios.get(
-        `http://localhost:5001/api/ratings/student/${encodeURIComponent(studentEmail)}/tutor/${encodeURIComponent(tutorEmail)}/course/${courseId}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/ratings/student/${encodeURIComponent(studentEmail)}/tutor/${encodeURIComponent(tutorEmail)}/course/${courseId}`
       );
       
       if (myRatingRes.data.rating) {
@@ -30,7 +30,7 @@ function Rating({ tutorEmail, tutorName, courseId, courseName, studentEmail, stu
 
       // Get all tutor ratings
       const tutorRatingsRes = await axios.get(
-        `http://localhost:5001/api/ratings/tutor/${encodeURIComponent(tutorEmail)}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/ratings/tutor/${encodeURIComponent(tutorEmail)}`
       );
       
       setTutorRatings(tutorRatingsRes.data.ratings || []);
@@ -60,7 +60,7 @@ function Rating({ tutorEmail, tutorName, courseId, courseName, studentEmail, stu
         review: myReview
       });
 
-      const response = await axios.post("http://localhost:5001/api/ratings/submit-rating", {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/ratings/submit-rating`, {
         tutorEmail,
         tutorName,
         studentEmail,

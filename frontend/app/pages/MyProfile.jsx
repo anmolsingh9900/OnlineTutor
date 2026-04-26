@@ -31,7 +31,7 @@ function MyProfile() {
       }
       
       const encodedEmail = encodeURIComponent(email);
-      const res = await axios.get(`http://localhost:5001/api/users/profile/${encodedEmail}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/profile/${encodedEmail}`);
       
       setForm({
         name: res.data.name || "",
@@ -103,7 +103,7 @@ function MyProfile() {
 
       const encodedEmail = encodeURIComponent(email);
       await axios.put(
-        `http://localhost:5001/api/users/profile/${encodedEmail}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/users/profile/${encodedEmail}`,
         updateData
       );
 

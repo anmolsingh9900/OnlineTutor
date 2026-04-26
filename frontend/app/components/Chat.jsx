@@ -32,7 +32,7 @@ function Chat() {
       if (role === "tutor") studentEmailParam = useParams().tutorEmail;
       if (role === "student") tutorEmailParam = tutorEmail;
       const res = await axios.get(
-        `http://localhost:5001/api/chats/get-messages/${studentEmailParam}/${tutorEmailParam}/${courseId}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/chats/get-messages/${studentEmailParam}/${tutorEmailParam}/${courseId}`
       );
       setMessages(res.data.messages || []);
     } catch (err) {
@@ -57,7 +57,7 @@ function Chat() {
         senderRole: role,
         senderName: userName
       };
-      await axios.post("http://localhost:5001/api/chats/send-message", payload);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/chats/send-message`, payload);
       setMessage("");
       fetchMessages();
     } catch (err) {

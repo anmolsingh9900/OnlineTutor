@@ -35,13 +35,13 @@ function StudentDashboard() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/api/courses")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/api/courses`)
       .then((res) => {
         setCourses(res.data);
         // Fetch ratings for all tutors
         res.data.forEach(course => {
           axios
-            .get(`http://localhost:5001/api/ratings/tutor/${course.tutorEmail}`)
+            .get(`${import.meta.env.VITE_API_BASE_URL}/api/ratings/tutor/${course.tutorEmail}`)
             .then((ratingRes) => {
               setTutorRatings(prev => ({
                 ...prev,
@@ -61,7 +61,7 @@ function StudentDashboard() {
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "https://via.placeholder.com/300x150?text=No+Image";
     if (imagePath.startsWith("http")) return imagePath;
-    return `http://localhost:5001${imagePath}`;
+    return `${import.meta.env.VITE_API_BASE_URL}${imagePath}`;
   };
 
   const startChat = (c) => {
@@ -86,7 +86,7 @@ function StudentDashboard() {
         return;
       }
 
-      const response = await axios.post("http://localhost:5001/api/users/purchase", {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/users/purchase`, {
         email: studentEmail,
         courseId: course._id || course.name,
         courseName: course.name,

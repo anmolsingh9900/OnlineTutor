@@ -79,7 +79,7 @@ function ChatPage() {
           ? `/api/chats/list/${userEmail}/student`
           : `/api/chats/list/${userEmail}/tutor`;
 
-      const res = await axios.get(`http://localhost:5001${endpoint}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}${endpoint}`);
       const chatsData = res.data || [];
       setChats(chatsData);
     } catch (err) {
@@ -99,7 +99,7 @@ function ChatPage() {
       }
 
       // Use the chat endpoint with the actual ID
-      const res = await axios.get(`http://localhost:5001/api/chats/${selectedChatId}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chats/${selectedChatId}`);
       
       if (res.data?.messages) {
         setMessages(res.data.messages);
@@ -161,7 +161,7 @@ function ChatPage() {
         return;
       }
 
-      const res = await axios.post("http://localhost:5001/api/chats/send-message", payload);
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/chats/send-message`, payload);
 
       setMessageText("");
 

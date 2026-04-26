@@ -22,7 +22,7 @@ function TutorDashboard() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get("http://localhost:5001/api/courses");
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/courses`);
 
         const myCourses = res.data.filter(
           (c) => c.tutorName === localStorage.getItem("name"),
@@ -54,7 +54,7 @@ function TutorDashboard() {
       if (editingId) {
         // 🔥 UPDATE
         res = await axios.put(
-          `http://localhost:5001/api/courses/${editingId}`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/courses/${editingId}`,
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -69,7 +69,7 @@ function TutorDashboard() {
       } else {
         // ➕ ADD
         res = await axios.post(
-          "http://localhost:5001/api/courses/add",
+          `${import.meta.env.VITE_API_BASE_URL}/api/courses/add`,
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -112,13 +112,13 @@ function TutorDashboard() {
       fee: course.fee,
     });
 
-    setPreview(`http://localhost:5001${course.image}`);
+    setPreview(`${import.meta.env.VITE_API_BASE_URL}${course.image}`);
   };
 
   // 🗑 DELETE
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5001/api/courses/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/courses/${id}`);
 
       setCourses((prev) => prev.filter((c) => c._id !== id));
 
@@ -161,7 +161,7 @@ function TutorDashboard() {
               <img
                 src={
                   c.image
-                    ? `http://localhost:5001${c.image}`
+                    ? `${import.meta.env.VITE_API_BASE_URL}${c.image}`
                     : "https://via.placeholder.com/300x150"
                 }
                 alt="course"

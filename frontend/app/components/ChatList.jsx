@@ -27,9 +27,9 @@ function ChatList() {
       setLoading(true);
       let res;
       if (role === "student") {
-        res = await axios.get(`http://localhost:5001/api/chats/get-student-chats/${userEmail}`);
+        res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chats/get-student-chats/${userEmail}`);
       } else {
-        res = await axios.get(`http://localhost:5001/api/chats/get-tutor-chats/${userEmail}`);
+        res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chats/get-tutor-chats/${userEmail}`);
       }
       setChats(res.data);
     } catch (err) {
