@@ -39,7 +39,10 @@ if (!mongoUri) {
 }
 
 mongoose.connect(mongoUri)
-.then(() => console.log("✅ MongoDB Atlas Connected"))
+.then(() => {
+  const isProd = process.env.NODE_ENV === "production";
+  console.log(isProd ? "☁️ Connected to MongoDB Atlas (Production)" : "🏠 Connected to MongoDB Atlas (Local Development)");
+})
 .catch(err => {
   console.error("❌ MongoDB connection error:", err);
   process.exit(1);
@@ -47,12 +50,14 @@ mongoose.connect(mongoUri)
 
 // ✅ Test route
 app.get("/", (req, res) => {
-  res.send("Backend working 🚀");
+  const isProd = process.env.NODE_ENV === "production";
+  res.send(`Backend working ${isProd ? "on Production 🚀" : "Locally 🏠"}`);
 });
 
 // ✅ Port
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  const isProd = process.env.NODE_ENV === "production";
+  console.log(`🚀 Server running on port ${PORT} [${isProd ? "PRODUCTION" : "LOCAL"}]`);
 });

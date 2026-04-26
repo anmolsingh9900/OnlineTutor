@@ -57,6 +57,7 @@ const [role, setRole] = useState(getRoleFromURL());
 };
 
 const handleRegister = async () => {
+  console.log("🚀 Registration started...");
   const error = validateForm();
 
   if (error) {
@@ -65,7 +66,13 @@ const handleRegister = async () => {
   }
 
   try {
-    await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/users/register`, {
+    const apiUrl = import.meta.env.VITE_API_BASE_URL.endsWith("/")
+      ? import.meta.env.VITE_API_BASE_URL.slice(0, -1)
+      : import.meta.env.VITE_API_BASE_URL;
+
+    console.log(`📡 Sending request to: ${apiUrl}/api/users/register`);
+    
+    await axios.post(`${apiUrl}/api/users/register`, {
       role,
       ...form
     });
@@ -74,6 +81,7 @@ const handleRegister = async () => {
     navigate("/login");
 
   } catch (err) {
+    console.error("❌ Registration Error:", err);
     if (err.response?.data?.error?.includes("duplicate")) {
       showAlert("Email already registered ❌", "❌ Duplicate Email");
     } else {
