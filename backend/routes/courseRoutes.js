@@ -5,24 +5,10 @@ const User = require("../models/user");
 
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
+const { uploadToGitHub } = require("../utils/githubUpload");
 
-// 🔥 ABSOLUTE UPLOAD PATH
-const uploadPath = path.join(__dirname, "../uploads");
-
-// 🔥 MULTER CONFIG
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-
+// 🔥 MULTER CONFIG: Store in memory instead of local disk
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 
@@ -37,6 +23,11 @@ router.post("/add", upload.single("image"), async (req, res) => {
       return res.status(404).json({ message: "Tutor not found" });
     }
 
+    let imageUrl = "";
+    if (req.file) {
+      imageUrl = await uploadToGitHub(req.file.buffer, req.file.originalname);
+    }
+
     const course = new Course({
       tutorName,
       tutorEmail: (tutor.email || "").toLowerCase().trim(),
@@ -45,7 +36,7 @@ router.post("/add", upload.single("image"), async (req, res) => {
       time,
       fee,
       mobile: tutor.mobile,
-      image: req.file ? `/uploads/${req.file.filename}` : ""
+      image: imageUrl
     });
 
     await course.save();
@@ -71,7 +62,7 @@ router.put("/:id", upload.single("image"), async (req, res) => {
 
     // ✅ if new image uploaded
     if (req.file) {
-      updateData.image = `/uploads/${req.file.filename}`;
+      updateData.image = await uploadToGitHub(req.file.buffer, req.file.originalname);
     }
 
     const updatedCourse = await Course.findByIdAndUpdate(
