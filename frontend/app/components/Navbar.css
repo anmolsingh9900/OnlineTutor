@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2px 50px;
+  padding: 10px 50px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
@@ -52,7 +52,7 @@
 }
 
 .navbar button {
-  padding: 16px 16px;
+  padding: 2px 20px;
   font-size: 16px;
   font-weight: 500;
   background: transparent;
@@ -165,8 +165,6 @@
 }
  .notification-bell h1 {
   font-size: 30px;
-  margin: 0px;
-  padding: 0px;
 }
 
 .notification-bell:hover {
@@ -190,7 +188,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 8px;
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(255, 82, 82, 0.5);
   animation: badgePulse 2s infinite;
@@ -235,7 +233,8 @@
 
 .dropdown-item {
   width: 100%;
-  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   background: transparent;
   border: none;
   text-align: left;
@@ -248,7 +247,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 1px;
+  gap: 5px;
   outline: none;
 }
 

@@ -26,11 +26,7 @@ function ChatList() {
     try {
       setLoading(true);
       let res;
-      if (role === "student") {
-        res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chats/get-student-chats/${userEmail}`);
-      } else {
-        res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chats/get-tutor-chats/${userEmail}`);
-      }
+      res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chats/list/${userEmail}/${role}`);
       setChats(res.data);
     } catch (err) {
       // Error handled
@@ -81,6 +77,9 @@ function ChatList() {
               </div>
               <div className="ChatItemMeta">
                 <span className="ChatItemDate">{getLastMessageTime(chat.messages)}</span>
+                {chat.unreadCount > 0 && (
+                  <span className="ChatListUnreadBadge">{chat.unreadCount > 99 ? "99+" : chat.unreadCount}</span>
+                )}
               </div>
             </div>
           ))}

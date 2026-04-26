@@ -105,7 +105,8 @@ router.post("/send-message", async (req, res) => {
       sender: senderRole,
       senderName: senderName.trim(),
       message: message.trim(),
-      timestamp: new Date()
+      timestamp: new Date(),
+      isRead: false
     };
 
     chat.messages.push(newMessage);
@@ -187,8 +188,15 @@ router.get("/list/:email/:role", async (req, res) => {
       // Continue anyway - tutorEmail might be set already
     }
 
+    // Calculate unread counts
+    const chatsWithUnread = chats.map(chat => {
+      const chatObj = chat.toObject();
+      chatObj.unreadCount = chatObj.messages.filter(m => m.sender !== role && !m.isRead).length;
+      return chatObj;
+    });
+
     console.log(`  ✓ Found ${chats.length} chats`);
-    res.json(chats);
+    res.json(chatsWithUnread);
   } catch (err) {
     console.error("❌ Error fetching chats:", err.message);
     res.status(500).json({ error: "Error fetching chats" });
@@ -221,6 +229,7 @@ router.get("/get-messages/:studentEmail/:tutorEmail/:courseId", async (req, res)
 
     console.log(`  ✓ Found ${chat.messages.length} messages`);
     res.json({ 
+      chatId: chat._id,
       messages: chat.messages,
       backupInfo: chat.getBackupInfo()
     });
@@ -454,6 +463,57 @@ router.post("/repair-all", async (req, res) => {
   } catch (err) {
     console.error("❌ Error in repair process:", err.message);
     res.status(500).json({ error: "Error in repair process", details: err.message });
+  }
+});
+
+// 📖 GET UNREAD COUNT TOTAL
+router.get("/unread-count/:email/:role", async (req, res) => {
+  try {
+    const { email, role } = req.params;
+    const normEmail = normalizeEmail(email);
+
+    let chats;
+    if (role === "student") {
+      chats = await Chat.find({ studentEmail: normEmail });
+    } else {
+      chats = await Chat.find({ tutorEmail: normEmail });
+    }
+
+    let totalUnread = 0;
+    chats.forEach(chat => {
+      totalUnread += chat.messages.filter(m => m.sender !== role && !m.isRead).length;
+    });
+
+    res.json({ unreadCount: totalUnread });
+  } catch (err) {
+    console.error("❌ Error fetching unread count:", err.message);
+    res.status(500).json({ error: "Error fetching unread count" });
+  }
+});
+
+// ✅ MARK CHAT AS READ
+router.post("/mark-read/:chatId/:role", async (req, res) => {
+  try {
+    const { chatId, role } = req.params;
+    const chat = await Chat.findById(chatId);
+    if (!chat) return res.status(404).json({ error: "Chat not found" });
+
+    let modified = false;
+    chat.messages.forEach(m => {
+      if (m.sender !== role && !m.isRead) {
+        m.isRead = true;
+        modified = true;
+      }
+    });
+
+    if (modified) {
+      chat.markModified("messages");
+      await chat.save();
+    }
+    res.json({ success: true });
+  } catch (err) {
+    console.error("❌ Error marking read:", err.message);
+    res.status(500).json({ error: "Error marking read" });
   }
 });
 

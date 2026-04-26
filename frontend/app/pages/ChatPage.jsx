@@ -24,6 +24,17 @@ function ChatPage() {
 
   // Navigation state (when coming from Student Dashboard or My Purchases)
   const courseFromNav = useRef(location.state?.course || null);
+  const messagesContainerRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
 
   // ✅ STEP 1: Check auth and load chats on mount
@@ -103,6 +114,12 @@ function ChatPage() {
       
       if (res.data?.messages) {
         setMessages(res.data.messages);
+        
+        // ✅ Mark as read if there are any unread messages from the other person
+        const hasUnread = res.data.messages.some(m => m.sender !== userRole && !m.isRead);
+        if (res.data._id && hasUnread) {
+          await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/chats/mark-read/${res.data._id}/${userRole}`);
+        }
       } else {
         setMessages([]);
       }
@@ -256,6 +273,11 @@ function ChatPage() {
                   </p>
                 </div>
                 <div className="ChatPageItemMeta">
+                  {chat.unreadCount > 0 && (
+                    <span className="ChatListUnreadBadge">
+                      {chat.unreadCount > 99 ? "99+" : chat.unreadCount}
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
@@ -273,7 +295,7 @@ function ChatPage() {
               </div>
             </div>
 
-            <div className="ChatRoomMessages">
+            <div className="ChatRoomMessages" ref={messagesContainerRef}>
               {messages.length === 0 ? (
                 <p className="NoMessagesText">Start your conversation...</p>
               ) : (

@@ -1,12 +1,18 @@
+require("dotenv").config(); // ✅ load env variables
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
-require("dotenv").config(); // ✅ load env variables
 
 const app = express();
 
-app.use(cors());
+// ✅ CORS (use env in production)
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || "*",
+  credentials: true
+}));
+
 app.use(express.json());
 
 // 🔍 LOGGING MIDDLEWARE
@@ -18,27 +24,35 @@ app.use((req, res, next) => {
 // ✅ STATIC PATH
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Routes
+// ✅ Routes
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/courses", require("./routes/courseRoutes"));
 app.use("/api/chats", require("./routes/chatRoutes"));
-const ratingRoutes = require("./routes/ratingRoutes");
-app.use("/api/ratings", ratingRoutes);
+app.use("/api/ratings", require("./routes/ratingRoutes"));
 
-// ✅ MongoDB from .env
-const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI;
+// ✅ MongoDB Connection (Improved)
+const mongoUri = process.env.MONGODB_URI;
+
+if (!mongoUri) {
+  console.error("❌ MONGODB_URI is not defined in .env");
+  process.exit(1);
+}
+
 mongoose.connect(mongoUri)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.error("MongoDB connection error:", err));
+.then(() => console.log("✅ MongoDB Atlas Connected"))
+.catch(err => {
+  console.error("❌ MongoDB connection error:", err);
+  process.exit(1);
+});
 
-// Test route
+// ✅ Test route
 app.get("/", (req, res) => {
   res.send("Backend working 🚀");
 });
 
-// ✅ Port from .env
+// ✅ Port
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

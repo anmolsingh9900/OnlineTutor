@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import logo from "../assets/logo.png";
 import "./Navbar.css";
 
@@ -29,10 +30,16 @@ function Navbar() {
     };
 
     // Check for unread messages
-    const checkUnreadMessages = () => {
-      const unread = localStorage.getItem("unreadMessages");
-      if (unread) {
-        setUnreadCount(parseInt(unread));
+    const checkUnreadMessages = async () => {
+      if (!isLoggedIn || !role) return;
+      const email = localStorage.getItem("email");
+      if (!email) return;
+
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chats/unread-count/${email}/${role}`);
+        setUnreadCount(res.data.unreadCount || 0);
+      } catch (err) {
+        console.error("Error fetching unread count", err);
       }
     };
 
@@ -184,8 +191,6 @@ function Navbar() {
                   className="notification-bell"
                   onClick={() => {
                     navigate("/chats");
-                    setUnreadCount(0);
-                    localStorage.removeItem("unreadMessages");
                   }}
                   title={unreadCount > 0 ? `You have ${unreadCount} unread messages` : "No new messages"}
                 >

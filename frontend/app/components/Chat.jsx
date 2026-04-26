@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Chat.css";
@@ -9,6 +9,17 @@ function Chat() {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const messagesContainerRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const userEmail = localStorage.getItem("email");
   const userName = localStorage.getItem("name");
@@ -35,6 +46,12 @@ function Chat() {
         `${import.meta.env.VITE_API_BASE_URL}/api/chats/get-messages/${studentEmailParam}/${tutorEmailParam}/${courseId}`
       );
       setMessages(res.data.messages || []);
+      
+      // Mark as read if there are unread messages from the other person
+      const hasUnread = res.data.messages && res.data.messages.some(m => m.sender !== role && !m.isRead);
+      if (res.data.chatId && hasUnread) {
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/chats/mark-read/${res.data.chatId}/${role}`);
+      }
     } catch (err) {
       // Error handled
     }
@@ -78,7 +95,7 @@ function Chat() {
         </div>
       </div>
 
-      <div className="ChatMessages">
+      <div className="ChatMessages" ref={messagesContainerRef}>
         {messages.length === 0 ? (
           <p className="NoMessagesText">Start your conversation...</p>
         ) : (

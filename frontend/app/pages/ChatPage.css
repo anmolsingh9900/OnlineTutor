@@ -584,3 +584,16 @@
     font-size: 12px;
   }
 }
+
+/* Unread Badge for Chat List */
+.ChatListUnreadBadge {
+  background: linear-gradient(135deg, #ff4757, #ff6b81);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 2px 5px rgba(255, 71, 87, 0.3);
+  margin-top: 4px;
+}
