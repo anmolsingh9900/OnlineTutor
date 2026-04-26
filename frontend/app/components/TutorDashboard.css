@@ -1,0 +1,222 @@
+/* ----------TutorDashboard Component---------- */
+.TutorCourseLayout {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.TutorCourseCardHeading {
+  text-align: center;
+}
+
+.TutorCourseCardHeading h2 {
+  font-size: 28px;
+  color: #071124;
+  margin: 20px 0 30px;
+  font-weight: 700;
+}
+
+.TutorCourseCard {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.TutorCourseCardGrid {
+  width: 350px;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 5px 5px 10px 15px rgba(0,0,0,0.1);
+}
+
+.TutorCourseForm {
+  text-align: center;
+}
+
+.TutorCourseForm .btn {
+  background: linear-gradient(135deg, #4a6cf7 0%, #2a4cd7 100%);
+  color: white;
+  border: none;
+  width: 150px;
+  margin: auto;
+  margin-top: 10px;
+  padding: 12px 20px;
+  margin-top: 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.TutorCourseFormGrid {
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 350px;
+  background: rgb(255, 255, 255);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 5px 5px 10px 15px rgba(0,0,0,0.1);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.TutorDBCourseImg {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.CourseEdit-btn {
+  background: linear-gradient(135deg, #f78c4a 0%, #d7a02a 100%);
+  color: white;
+  border: none;
+  width: 140px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.CourseDelete-btn {
+  background: linear-gradient(135deg, #f74a4a 0%, #d72a2a 100%);
+  color: white;
+  border: none;
+  width: 140px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.TutorCourseFormGrid input, 
+.TutorCourseFormGrid textarea {
+  width: 90%;
+  padding: 10px;
+  margin: auto;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+
+/* ✅ Fix preview image overflow */
+.course-img {
+  max-width: 100%;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .TutorCourseLayout {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 15px;
+  }
+
+  .TutorCourseCardGrid {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .TutorCourseFormGrid {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .TutorCourseLayout {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .TutorCourseCard {
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .TutorCourseCardGrid {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+  }
+
+  .TutorCourseFormGrid {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    gap: 15px;
+  }
+
+  .action-btns {
+    gap: 10px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    width: auto;
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .TutorCourseLayout {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .TutorCourseCardGrid {
+    width: 100%;
+    padding: 10px;
+    margin: 0 auto;
+  }
+
+  .TutorCourseFormGrid {
+    width: 100%;
+    padding: 10px;
+    margin: 10px auto;
+  }
+
+  .TutorCourseFormGrid input,
+  .TutorCourseFormGrid textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .TutorCourseFormGrid .btn {
+    width: 100%;
+    margin: 8px 0 0 0;
+  }
+
+  .TutorDBCourseImg {
+    height: 120px;
+  }
+
+  .action-btns {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    width: 100%;
+  }
+
+  .TutorCourseFormGrid h3 {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,292 @@
+/* --------------------------------MyPurchase Page------------ */
+
+.purchase-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.purchase-header {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: slideInDown 0.6s ease;
+}
+
+.purchase-header h1 {
+  font-size: 36px;
+  color: #071124;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.purchase-header p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.loading-text {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+  padding: 40px;
+}
+
+.no-purchases {
+  background: white;
+  border-radius: 12px;
+  padding: 60px 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.empty-message {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.explore-btn {
+  background: linear-gradient(135deg, #071124, #4b4d4e);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.explore-btn:hover {
+  background: #6f7177;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(74, 108, 247, 0.3);
+}
+
+.purchases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+  animation: fadeIn 0.6s ease;
+}
+
+.purchase-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e8eef7;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.purchase-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(74, 108, 247, 0.15);
+  border-color: #494949;
+}
+
+.purchase-card-header {
+  background: linear-gradient(135deg, #071124, #4b4d4e);
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.purchase-card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  flex: 1;
+}
+
+.purchase-badge {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.purchase-details {
+  padding: 20px;
+  flex: 1;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.detail-item .label {
+  font-weight: 600;
+  color: #071124;
+  font-size: 14px;
+}
+
+.detail-item .value {
+  color: #666;
+  font-size: 14px;
+}
+
+.purchase-actions {
+  padding: 0 20px 20px 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.contact-btn {
+  flex: 1;
+  background: linear-gradient(135deg, #071124, #4b4d4e);
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  min-width: 100px;
+}
+
+.contact-btn:hover {
+  background: #57585b;
+  transform: scale(1.02);
+}
+
+.contact-btn:active {
+  transform: scale(0.98);
+}
+
+.rating-btn {
+  flex: 1;
+  background: linear-gradient(135deg, #ff7a00, #ff5e00);
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  min-width: 100px;
+}
+
+.rating-btn:hover {
+  background: linear-gradient(135deg, #ff8f1a, #ff7a00);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(255, 122, 0, 0.3);
+}
+
+.rating-btn:active {
+  transform: scale(0.98);
+}
+
+.rating-section {
+  padding: 20px;
+  background: #f9f9f9;
+  border-top: 2px solid #e8eef7;
+  animation: slideDown 0.3s ease;
+}
+
+/* ---------- Animations ---------- */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- Responsive Design ---------- */
+@media (max-width: 768px) {
+  .purchase-container {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .purchase-header h1 {
+    font-size: 28px;
+  }
+
+  .purchases-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .purchase-card-header {
+    flex-direction: column;
+  }
+
+  .purchase-badge {
+    align-self: flex-start;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .purchase-header h1 {
+    font-size: 24px;
+  }
+
+  .purchase-header p {
+    font-size: 14px;
+  }
+
+  .purchase-card-header h3 {
+    font-size: 16px;
+  }
+
+  .purchase-details,
+  .purchase-actions {
+    padding: 15px;
+  }
+}

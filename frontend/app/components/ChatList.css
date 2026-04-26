@@ -1,0 +1,144 @@
+/* -------------ChatList Component------------ */
+.ChatPageListHeader {
+  background: linear-gradient(135deg, #071124, #4b4d4e);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 3px solid #ff7a00;
+  box-shadow: 0 4px 12px rgba(7, 17, 36, 0.2);
+  border-radius: 20px 0 0 0;
+}
+
+.ChatPageListHeader h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ChatPageList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.ChatPageList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ChatPageList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.ChatPageList::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff7a00, #c89260);
+  border-radius: 4px;
+}
+
+.ChatPageList::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff5e00, #b0743d);
+}
+
+.ChatRoomItem {
+  padding: 15px 12px;
+  margin: 8px 8px;
+  border-left: 4px solid transparent;
+  background: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-right: 1px solid #e8eef7;
+}
+
+.ChatRoomItem:hover {
+  background: linear-gradient(135deg, #f8f9fc 0%, #f0f3f8 100%);
+  border-left-color: #4a6cf7;
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(74, 108, 247, 0.15);
+}
+
+.ChatRoomItem.active {
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  border-left-color: #ff7a00;
+  box-shadow: 0 4px 15px rgba(255, 122, 0, 0.2);
+}
+
+.ChatPageItemInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.ChatPageItemInfo h4 {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #071124;
+  word-break: break-word;
+}
+
+.ChatPageItemCourse {
+  margin: 3px 0;
+  font-size: 13px;
+  color: #4a6cf7;
+  font-weight: 600;
+}
+
+.ChatPageItemLastMsg {
+  margin: 5px 0 0 0;
+  font-size: 12px;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ChatPageItemMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  margin-left: 10px;
+}
+
+.ChatPageItemDate {
+  font-size: 11px;
+  color: #999;
+  white-space: nowrap;
+}
+
+.NoChatsMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 20px;
+  color: #888;
+}
+
+.NoChatsMessage p {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.NoChatsMessage .btn {
+  background: linear-gradient(135deg, #071124, #1a2a4a);
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(7, 17, 36, 0.2);
+}
+
+.NoChatsMessage .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(7, 17, 36, 0.3);
+}

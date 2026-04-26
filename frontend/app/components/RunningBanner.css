@@ -1,0 +1,55 @@
+/* ---------Running Banner Component----------- */
+.RunningTextBanner {
+  width: 100%;
+  overflow: hidden;
+  padding: 5px 0;
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  background: linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.05), rgba(0,0,0,0.02));
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.StudentBanner {
+  background: linear-gradient(90deg, #e3f2fd 0%, #f3e5f5 50%, #e3f2fd 100%);
+  border-top: 2px solid #ff8c00;
+  border-bottom: 2px solid #ff8c00;
+}
+
+.TutorBanner {
+  background: linear-gradient(90deg, #fff3e0 0%, #f3e5f5 50%, #fff3e0 100%);
+  border-top: 2px solid #ff8c00;
+  border-bottom: 2px solid #ff8c00;
+}
+
+.RunningTextContent {
+  display: flex;
+  animation: scrollText 40s linear infinite;
+  gap: 30px;
+}
+
+.RunningTextContent span {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 0 15px;
+  color: #333;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.RunningTextContent span.separator {
+  color: #999;
+  font-weight: 400;
+  padding: 0 10px;
+  font-size: 18px;
+}
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

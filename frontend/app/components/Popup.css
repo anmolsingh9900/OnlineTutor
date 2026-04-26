@@ -1,0 +1,144 @@
+/* POPUP OVERLAY */
+.PopupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* POPUP WINDOW */
+.PopupWindow {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  max-width: 450px;
+  width: 90%;
+  animation: slideUp 0.3s ease-out;
+  overflow: hidden;
+}
+
+.PopupWindowLarge {
+  max-width: 600px;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* POPUP HEADER */
+.PopupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  background: #f9f9f9;
+}
+
+.PopupHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+}
+
+.PopupClose {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.PopupClose:hover {
+  background: #eee;
+  color: #333;
+}
+
+/* POPUP BODY */
+.PopupBody {
+  padding: 20px;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.6;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.PopupBody p {
+  margin: 0;
+  word-wrap: break-word;
+}
+
+/* POPUP FOOTER */
+.PopupFooter {
+  display: flex;
+  gap: 10px;
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  background: #f9f9f9;
+  justify-content: flex-end;
+}
+
+/* POPUP BUTTONS */
+.PopupBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.PopupBtnPrimary {
+  background: #ff7a00;
+  color: white;
+}
+
+.PopupBtnPrimary:hover {
+  background: #e66a00;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 122, 0, 0.3);
+}
+
+.PopupBtnSecondary {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.PopupBtnSecondary:hover {
+  background: #d0d0d0;
+  transform: translateY(-2px);
+}

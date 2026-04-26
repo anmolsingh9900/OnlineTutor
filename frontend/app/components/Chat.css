@@ -1,0 +1,406 @@
+/* --------------------------------Chat Component------------ */
+.ChatContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 100px);
+  background: white;
+}
+
+.ChatHeader {
+  background: linear-gradient(135deg, #071124 0%, #1a2a4a 100%);
+  color: white;
+  padding: 15px 20px;
+  border-bottom: 3px solid #ff7a00;
+  box-shadow: 0 4px 12px rgba(7, 17, 36, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.BackBtn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.BackBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-2px);
+}
+
+.ChatHeaderInfo h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+}
+
+.ChatHeaderInfo p {
+  margin: 5px 0 0 0;
+  font-size: 13px;
+  color: #c89260;
+  font-weight: 500;
+}
+
+.ChatMessages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #fff9f5;
+}
+
+.ChatMessages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ChatMessages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ChatMessages::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff7a00, #c89260);
+  border-radius: 4px;
+}
+
+.ChatMessages::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff5e00, #b0743d);
+}
+
+.ChatPageMessage {
+  display: flex;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.ChatPageMessage.student {
+  justify-content: flex-end;
+}
+
+.ChatPageMessage.tutor {
+  justify-content: flex-start;
+}
+
+.MessageBubble {
+  max-width: 60%;
+  padding: 12px 16px;
+  border-radius: 15px;
+  word-wrap: break-word;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out;
+}
+
+.ChatPageMessage.student .MessageBubble {
+  background: linear-gradient(135deg, #4a6cf7 0%, #3a5cd7 100%);
+  color: white;
+  border-radius: 15px 0 15px 15px;
+  margin-left: auto;
+  box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+}
+
+.ChatPageMessage.tutor .MessageBubble {
+  background: white;
+  color: #333;
+  border-radius: 0 15px 15px 15px;
+  margin-right: auto;
+  border: 1px solid #e8eef7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.MessageSender {
+  margin: 0 0 5px 0;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.ChatPageMessage.tutor .MessageSender {
+  color: #071124;
+}
+
+.ChatPageMessage.student .MessageSender {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.MessageContent {
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.MessageTimestamp {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 5px;
+  display: block;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.NoMessagesText {
+  text-align: center;
+  color: #999;
+  font-size: 16px;
+  padding: 30px;
+  font-style: italic;
+}
+
+.ChatInput {
+  display: flex;
+  gap: 10px;
+  padding: 15px 20px;
+  background: white;
+  border-top: 1px solid #e8eef7;
+}
+
+.ChatInput input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.ChatInput input:focus {
+  outline: none;
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+}
+
+.ChatInput button {
+  background: linear-gradient(135deg, #4a6cf7 0%, #2a4cd7 100%);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.ChatInput button:hover {
+  background: linear-gradient(135deg, #3a5cd7 0%, #1a3cb7 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+}
+
+.ChatInput button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .ChatMessages {
+    padding: 15px;
+  }
+
+  .MessageBubble {
+    max-width: 85%;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .ChatInput {
+    padding: 12px 15px;
+    gap: 8px;
+  }
+
+  .ChatInput button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+/* ChatPageMessage styles for Chat component */
+.ChatPageMessage {
+  display: flex;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.ChatPageMessage.student {
+  justify-content: flex-end;
+}
+
+.ChatPageMessage.tutor {
+  justify-content: flex-start;
+}
+
+.MessageBubble {
+  max-width: 50%;
+  padding: 12px 16px;
+  border-radius: 15px;
+  word-wrap: break-word;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out;
+}
+
+.ChatPageMessage.student .MessageBubble {
+  background: linear-gradient(135deg, #4a6cf7 0%, #3a5cd7 100%);
+  color: white;
+  border-radius: 15px 0 15px 15px;
+  margin-left: auto;
+  box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+}
+
+.ChatPageMessage.tutor .MessageBubble {
+  background: white;
+  color: #333;
+  border-radius: 0 15px 15px 15px;
+  margin-right: auto;
+  border: 1px solid #e8eef7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.MessageSender {
+  margin: 0 0 5px 0;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.ChatPageMessage.tutor .MessageSender {
+  color: #071124;
+}
+
+.ChatPageMessage.student .MessageSender {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.MessageContent {
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.MessageTimestamp {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 5px;
+  display: block;
+}
+
+.ChatRoomEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 24px;
+  color: #888;
+  text-align: center;
+}
+
+.ChatRoomInput {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  background: white;
+  border-top: 2px solid #e8eef7;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 0 0 20px 20px;
+}
+
+.ChatRoomInput input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 2px solid #e8eef7;
+  border-radius: 25px;
+  font-size: 14px;
+  background: #f8f9fc;
+  transition: all 0.3s;
+  font-family: Arial, sans-serif;
+}
+
+.ChatRoomInput input:focus {
+  outline: none;
+  border-color: #4a6cf7;
+  background: white;
+  box-shadow: 0 0 12px rgba(74, 108, 247, 0.2);
+}
+
+.ChatRoomInput input::placeholder {
+  color: #bbb;
+}
+
+.ChatRoomInput button {
+  background: linear-gradient(135deg, #ff7a00, #ff5e00);
+  color: white;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(255, 122, 0, 0.3);
+  font-size: 14px;
+}
+
+.ChatRoomInput button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 122, 0, 0.4);
+}
+
+.ChatRoomInput button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+  .ChatRoomMessageBubble {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .ChatRoomRightColumn {
+    width: 100%;
+    height: 70%;
+    min-height: 400px;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .ChatRoomHeader {
+    border-radius: 0;
+  }
+
+  .ChatRoomMessageBubble {
+    max-width: 85%;
+  }
+
+  .ChatRoomHeaderInfo h2 {
+    font-size: 18px;
+  }
+
+  .ChatRoomInput {
+    gap: 8px;
+    padding: 12px;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .ChatRoomInput input,
+  .ChatRoomInput button {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
