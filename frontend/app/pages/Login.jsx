@@ -30,7 +30,8 @@ function Login() {
       navigate("/");
 
     } catch (err) {
-      showAlert("Invalid credentials ❌", "❌ Login Failed");
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || "Invalid credentials";
+      showAlert(`${errorMsg} ❌`, "❌ Login Failed");
     }
   };
 

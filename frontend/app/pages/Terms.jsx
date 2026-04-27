@@ -15,9 +15,9 @@ function Terms() {
       </p>
 
       <br /><br />
-      <h3>👤 User Eligibility & Registration</h3>
+      <h3>👤 User Registration & Responsibility</h3>
       <p>
-        You must be at least 18 years old or have parental consent to use this platform. During registration, you agree to provide accurate, complete, and truthful information. You are responsible for maintaining the confidentiality of your account credentials and password. Any activity under your account is your responsibility.
+        During registration, you agree to provide accurate, complete, and truthful information. You are responsible for maintaining the confidentiality of your account credentials and password. Any activity under your account is your responsibility. Students of all ages are welcome to use the platform for educational purposes.
       </p>
 
       <br /><br />
@@ -42,10 +42,16 @@ function Terms() {
       </ul>
 
       <br /><br />
-      <h3>💳 Payment & Refund Policy</h3>
+      <h3>💳 Secure Payment & Rating Policy</h3>
       <p>
-        All course fees must be paid through our secure payment gateway. By purchasing a course, you authorize the platform to process your payment. Refunds are subject to our refund policy and must be requested within 7 days of purchase (only applicable if the course has not been started). Once payment is completed, the tutor will receive confirmation and course access will be granted.
+        To ensure a secure environment for both students and tutors, we strictly enforce a platform-based payment system.
       </p>
+      <ul>
+        <li>✔ <strong>Secure Transactions:</strong> All course fees should be paid through our secure payment gateway. We hold the payment and only release it to the tutor after the student marks the course as completed.</li>
+        <li>✔ <strong>Risk of Direct Payments:</strong> If a student pays a tutor directly outside the website, they assume all risks. We cannot provide security, dispute resolution, or refunds for direct payments. There is a high risk that a tutor may not deliver the service after receiving direct payment.</li>
+        <li>✔ <strong>Rating Eligibility:</strong> Students can <strong>only</strong> rate and review a tutor if the payment was made through our website. Direct payments do not grant access to the rating system.</li>
+        <li>✔ <strong>Tutor Reputation:</strong> Tutors are encouraged to have students pay through the platform to build their official rating and reputation, which increases their visibility to other students.</li>
+      </ul>
 
       <br /><br />
       <h3>⭐ Rating & Review System</h3>
