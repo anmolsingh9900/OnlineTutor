@@ -54,17 +54,25 @@ function Navbar() {
       }
     };
 
-    checkUnreadMessages();
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // Poll for unread messages every 3 seconds
-    const pollInterval = setInterval(checkUnreadMessages, 3000);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      clearInterval(pollInterval);
-    };
-  }, []);
+    // Only start polling if user is logged in
+    if (isLoggedIn && role) {
+      checkUnreadMessages(); // Initial check
+      const pollInterval = setInterval(checkUnreadMessages, 3000); // Poll every 3 seconds
+      
+      document.addEventListener("mousedown", handleClickOutside);
+      
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        clearInterval(pollInterval);
+      };
+    } else {
+      setUnreadCount(0);
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [isLoggedIn, role]);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
