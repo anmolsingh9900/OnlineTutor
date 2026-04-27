@@ -31,15 +31,26 @@ function Navbar() {
 
     // Check for unread messages
     const checkUnreadMessages = async () => {
-      if (!isLoggedIn || !role) return;
+      if (!isLoggedIn || !role) {
+        setUnreadCount(0);
+        return;
+      }
       const email = localStorage.getItem("email");
-      if (!email) return;
+      if (!email) {
+        setUnreadCount(0);
+        return;
+      }
 
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chats/unread-count/${email}/${role}`);
+        const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/chats/unread-count/${encodeURIComponent(email)}/${role}`;
+        console.log("📡 Fetching unread count from:", apiUrl);
+        const res = await axios.get(apiUrl);
+        console.log("✅ Unread count response:", res.data);
         setUnreadCount(res.data.unreadCount || 0);
       } catch (err) {
-        console.error("Error fetching unread count", err);
+        console.error("❌ Error fetching unread count:", err.message);
+        console.error("Response:", err.response?.data);
+        setUnreadCount(0);
       }
     };
 

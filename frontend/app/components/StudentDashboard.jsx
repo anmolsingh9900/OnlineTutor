@@ -19,7 +19,8 @@ function StudentDashboard() {
     if (rating >= 4) return "⭐ Excellent Tutor";
     if (rating >= 3.5) return "👍 Good Reviews";
     if (rating >= 3) return "📚 Average Ratings";
-    if (rating >= 2) return "⚠️ Mixed Reviews";
+    if (rating >= 2) return "⚠️ Not Our Recommendation";
+    if (rating >= 1) return "⛔️ Take Risk at Your Own Discretion";
     return "👀 New on Platform";
   };
 
