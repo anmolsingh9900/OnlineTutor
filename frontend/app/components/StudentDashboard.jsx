@@ -38,14 +38,14 @@ function StudentDashboard() {
       .get(`${import.meta.env.VITE_API_BASE_URL}/api/courses`)
       .then((res) => {
         setCourses(res.data);
-        // Fetch ratings for all tutors
+        // Fetch ratings for each course (per-course ratings, not per-tutor)
         res.data.forEach(course => {
           axios
-            .get(`${import.meta.env.VITE_API_BASE_URL}/api/ratings/tutor/${course.tutorEmail}`)
+            .get(`${import.meta.env.VITE_API_BASE_URL}/api/ratings/course/${course._id}`)
             .then((ratingRes) => {
               setTutorRatings(prev => ({
                 ...prev,
-                [course.tutorEmail]: ratingRes.data
+                [course._id]: ratingRes.data
               }));
             })
             .catch((err) => {
@@ -157,9 +157,9 @@ function StudentDashboard() {
                 </div>
               </div>
 
-              {/* ⭐ TUTOR RATING WITH COLOR & PROMO */}
+              {/* ⭐ COURSE RATING WITH COLOR & PROMO */}
               <div className="StudentDBRatingSection">
-                {tutorRatings[c.tutorEmail]?.totalRatings > 0 ? (
+                {tutorRatings[c._id]?.totalRatings > 0 ? (
                   <>
                     {/* Row 1: Colored Stars + Numeric Rating + Count */}
                     <div className="StudentDBRatingRow1">
@@ -168,8 +168,8 @@ function StudentDashboard() {
                           <span 
                             key={i}
                             style={{ 
-                              color: i < Math.round(tutorRatings[c.tutorEmail].averageRating) 
-                                ? getRatingColor(tutorRatings[c.tutorEmail].averageRating)
+                              color: i < Math.round(tutorRatings[c._id].averageRating) 
+                                ? getRatingColor(tutorRatings[c._id].averageRating)
                                 : '#ddd'
                             }}
                             className="StudentDBStar"
@@ -179,22 +179,22 @@ function StudentDashboard() {
                         ))}
                       </div>
                       <span className="StudentDBRatingNumeric">
-                        {tutorRatings[c.tutorEmail].averageRating.toFixed(1)}/5
+                        {tutorRatings[c._id].averageRating.toFixed(1)}/5
                       </span>
                       <span className="StudentDBRatingCount">
-                        {tutorRatings[c.tutorEmail].totalRatings} {tutorRatings[c.tutorEmail].totalRatings === 1 ? 'rating' : 'ratings'}
+                        {tutorRatings[c._id].totalRatings} {tutorRatings[c._id].totalRatings === 1 ? 'rating' : 'ratings'}
                       </span>
                     </div>
                     
                     {/* Row 2: Promo Comment */}
                     <p className="StudentDBRatingPromo">
-                      {getPromoComment(tutorRatings[c.tutorEmail].averageRating)}
+                      {getPromoComment(tutorRatings[c._id].averageRating)}
                     </p>
                   </>
                 ) : (
                   <div className="StudentDBRatingPromoNew">
                     <p>⭐ New on Platform</p>
-                    <p className="StudentDBRatingPromoNewSub">Be the first to rate this tutor!</p>
+                    <p className="StudentDBRatingPromoNewSub">Be the first to rate this course!</p>
                   </div>
                 )}
               </div>

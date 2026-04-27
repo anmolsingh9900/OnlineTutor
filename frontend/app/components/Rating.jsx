@@ -28,14 +28,14 @@ function Rating({ tutorEmail, tutorName, courseId, courseName, studentEmail, stu
         setMyReview(myRatingRes.data.rating.review);
       }
 
-      // Get all tutor ratings
-      const tutorRatingsRes = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/ratings/tutor/${encodeURIComponent(tutorEmail)}`
+      // Get course-specific ratings (not all tutor ratings)
+      const courseRatingsRes = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/ratings/course/${courseId}`
       );
       
-      setTutorRatings(tutorRatingsRes.data.ratings || []);
-      setAverageRating(tutorRatingsRes.data.averageRating || 0);
-      setTotalRatings(tutorRatingsRes.data.totalRatings || 0);
+      setTutorRatings(courseRatingsRes.data.ratings || []);
+      setAverageRating(courseRatingsRes.data.averageRating || 0);
+      setTotalRatings(courseRatingsRes.data.totalRatings || 0);
     } catch (err) {
       console.error("Error fetching ratings:", err);
     }

@@ -242,7 +242,7 @@ function ChatPage() {
             {userRole === "student" ? (
               <>
                 <p>No conversations yet</p>
-                <button onClick={() => navigate("/")} className="btn">
+                <button onClick={() => navigate("/student-dashboard")} className="btn">
                   Start Chatting
                 </button>
               </>

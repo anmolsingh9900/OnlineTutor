@@ -17,17 +17,20 @@ function Contact() {
 
           <div className="info-item">
             <span>📧</span>
-            <p>support@onlinetutor.com</p>
+            <p>anmolsingh9900@gmail.com</p>
           </div>
 
           <div className="info-item">
             <span>📱</span>
-            <p>+91 9876543210</p>
+            <p>+91 9431429905</p>
           </div>
 
           <div className="info-item">
             <span>📍</span>
-            <p>India</p>
+            <p>JNU Campus, 
+              New Mehrauli Road,
+              Munirka, New Delhi, 
+              110067,India</p>
           </div>
         </div>
 

@@ -69,7 +69,7 @@ router.post("/submit-rating", async (req, res) => {
   }
 });
 
-// ✅ GET ALL RATINGS FOR A TUTOR
+// ✅ GET ALL RATINGS FOR A TUTOR (all courses combined - kept for compatibility)
 router.get("/tutor/:tutorEmail", async (req, res) => {
   try {
     const { tutorEmail } = req.params;
@@ -81,6 +81,31 @@ router.get("/tutor/:tutorEmail", async (req, res) => {
     }
 
     // Calculate average rating
+    const sum = ratings.reduce((acc, r) => acc + r.rating, 0);
+    const averageRating = (sum / ratings.length).toFixed(1);
+
+    res.json({
+      ratings,
+      averageRating: parseFloat(averageRating),
+      totalRatings: ratings.length
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ GET RATINGS FOR A SPECIFIC COURSE (per-course average)
+router.get("/course/:courseId", async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    const ratings = await Rating.find({ courseId });
+
+    if (ratings.length === 0) {
+      return res.json({ ratings: [], averageRating: 0, totalRatings: 0 });
+    }
+
+    // Calculate average rating for this specific course
     const sum = ratings.reduce((acc, r) => acc + r.rating, 0);
     const averageRating = (sum / ratings.length).toFixed(1);
 
