@@ -1,4 +1,4 @@
-import slide1 from "../assets/sl1.png";
+import slide1 from "../assets/sl1.jpeg";
 import slide2 from "../assets/sl2.png";
 import slide3 from "../assets/sl3.png";
 import slide4 from "../assets/sl4.png";

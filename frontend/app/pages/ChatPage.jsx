@@ -24,6 +24,7 @@ function ChatPage() {
 
   // Navigation state (when coming from Student Dashboard or My Purchases)
   const courseFromNav = useRef(location.state?.course || null);
+  const chatsLoaded = useRef(false);
   const messagesContainerRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -48,28 +49,33 @@ function ChatPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // ✅ STEP 2: Auto-select first chat or prepare for new one from dashboard
+  // ✅ STEP 2: Auto-select existing chat or prepare for new one from dashboard
   useEffect(() => {
-    if (chats.length === 0 && !courseFromNav.current) return;
+    if (!courseFromNav.current) return;
 
-    if (courseFromNav.current) {
-      const course = courseFromNav.current;
-      const existing = chats.find((c) => c.courseId === (course._id || course.name));
+    // Wait until the first loadChats() API call has completed
+    // (chats will be [] on first render before the API responds)
+    if (!chatsLoaded.current) return;
 
-      if (existing) {
-        setSelectedChatId(existing._id);
-      } else {
-        setSelectedChatData({
-          courseId: course._id || course.name,
-          courseName: course.name,
-          tutorEmail: course.tutorEmail,
-          tutorName: course.tutorName,
-        });
-      }
-      courseFromNav.current = null;
+    const course = courseFromNav.current;
+    // Match on both courseId AND tutorEmail for reliable lookup
+    const existing = chats.find(
+      (c) =>
+        c.courseId === (course._id || course.name) &&
+        c.tutorEmail?.toLowerCase() === course.tutorEmail?.toLowerCase()
+    );
+
+    if (existing) {
+      setSelectedChatId(existing._id);
+    } else {
+      setSelectedChatData({
+        courseId: course._id || course.name,
+        courseName: course.name,
+        tutorEmail: course.tutorEmail,
+        tutorName: course.tutorName,
+      });
     }
-    // ✅ REMOVED: Auto-select first chat - let user manually select
-    // Only select if coming from course navigation (courseFromNav)
+    courseFromNav.current = null;
   }, [chats]);
 
   // ✅ STEP 3: Load messages when chat selected
@@ -92,25 +98,21 @@ function ChatPage() {
 
       const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}${endpoint}`);
       const chatsData = res.data || [];
+      chatsLoaded.current = true;
       setChats(chatsData);
     } catch (err) {
       // Error handled silently
     }
   };
 
-  const loadMessages = async () => {
-    if (!selectedChatId) return;
+  const loadMessages = async (chatIdParam = null) => {
+    const chatIdToUse = chatIdParam || selectedChatId;
+    if (!chatIdToUse) return;
     try {
-      // Get the current selected chat from the chats list to ensure accuracy
-      const selectedChat = chats.find((c) => c._id === selectedChatId);
-      
-      if (!selectedChat) {
-        setMessages([]);
-        return;
-      }
-
-      // Use the chat endpoint with the actual ID
-      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chats/${selectedChatId}`);
+      // Use the chat endpoint with the actual ID — fetch directly from API
+      // (No local chats-state validation; avoids race condition when a new chat
+      //  was just created but React state hasn't re-rendered yet)
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chats/${chatIdToUse}`);
       
       if (res.data?.messages) {
         setMessages(res.data.messages);
@@ -181,16 +183,22 @@ function ChatPage() {
       const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/chats/send-message`, payload);
 
       setMessageText("");
+      const newChatId = res.data.chat._id;
 
+      // ✅ Load messages FIRST (before state change triggers useEffect)
+      // This ensures messages are visible immediately
+      if (res.data.chat?.messages) {
+        setMessages(res.data.chat.messages);
+      }
+
+      // ✅ Now set selectedChatId (triggers useEffect polling)
       if (!selectedChatId) {
-        setSelectedChatId(res.data.chat._id);
+        setSelectedChatId(newChatId);
         setSelectedChatData(null);
       }
 
-      await loadChats();
-      if (res.data.chat._id) {
-        setTimeout(loadMessages, 300);
-      }
+      // Refresh chat list in background
+      loadChats();
     } catch (err) {
       console.error("❌ Error sending message:", err.message);
       const errorMsg = err.response?.data?.details ? 

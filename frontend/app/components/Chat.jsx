@@ -76,7 +76,8 @@ function Chat() {
       };
       await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/chats/send-message`, payload);
       setMessage("");
-      fetchMessages();
+      // ✅ Immediately fetch updated messages without delay
+      await fetchMessages();
     } catch (err) {
       console.error(err);
       alert("Error sending message");
