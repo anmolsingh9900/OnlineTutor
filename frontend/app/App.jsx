@@ -12,6 +12,7 @@ import MyProfile from "./pages/MyProfile";
 import MyPurchase from "./pages/MyPurchase";
 import StudentDashboard from "./components/StudentDashboard";
 import TutorDashboard from "./components/TutorDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -25,11 +26,23 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Terms />} />
-        <Route path="/chats" element={<ChatPage />} />
-        <Route path="/myprofile" element={<MyProfile />} />
-        <Route path="/mypurchase" element={<MyPurchase />} />
-        <Route path="/student-dashboard" element={<StudentDashboard />} />
-        <Route path="/tutor-dashboard" element={<TutorDashboard />} />
+
+        {/* 🔒 Protected Routes - require login */}
+        <Route path="/chats" element={
+          <ProtectedRoute><ChatPage /></ProtectedRoute>
+        } />
+        <Route path="/myprofile" element={
+          <ProtectedRoute><MyProfile /></ProtectedRoute>
+        } />
+        <Route path="/mypurchase" element={
+          <ProtectedRoute requiredRole="student"><MyPurchase /></ProtectedRoute>
+        } />
+        <Route path="/student-dashboard" element={
+          <ProtectedRoute requiredRole="student"><StudentDashboard /></ProtectedRoute>
+        } />
+        <Route path="/tutor-dashboard" element={
+          <ProtectedRoute requiredRole="tutor"><TutorDashboard /></ProtectedRoute>
+        } />
       </Routes>
 
       <Footer />

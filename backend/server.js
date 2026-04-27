@@ -8,21 +8,33 @@ const path = require("path");
 const app = express();
 
 // ✅ CORS (use env in production)
+const corsOrigin = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(",").map(s => s.trim())
+  : "*";
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || "*",
+  origin: corsOrigin,
   credentials: true
 }));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // 🔍 LOGGING MIDDLEWARE
 app.use((req, res, next) => {
   console.log(`📨 [${new Date().toISOString()}] ${req.method} ${req.path}`);
+  if (req.body && Object.keys(req.body).length > 0) {
+    console.log(`   Body:`, req.body);
+  }
   next();
 });
 
 // ✅ STATIC PATH
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// 🧪 TEST: Check database (must be BEFORE route middlewares)
+app.get("/api/test/tutors", async (req, res) => {
+  res.json({ message: "Test endpoint works!" });
+});
 
 // ✅ Routes
 app.use("/api/users", require("./routes/userRoutes"));
@@ -52,6 +64,26 @@ mongoose.connect(mongoUri)
 app.get("/", (req, res) => {
   const isProd = process.env.NODE_ENV === "production";
   res.send(`Backend working ${isProd ? "on Production 🚀" : "Locally 🏠"}`);
+});
+
+
+// 🚨 ERROR HANDLER
+app.use((err, req, res, next) => {
+  console.error("🚨 GLOBAL ERROR:", {
+    message: err.message,
+    stack: err.stack,
+    method: req.method,
+    path: req.path,
+    body: req.body,
+    files: req.files,
+  });
+  res.status(500).json({ error: err.message });
+});
+
+// ✅ 404 handler
+app.use((req, res) => {
+  console.warn(`⚠️ 404 Not Found: ${req.method} ${req.path}`);
+  res.status(404).json({ error: "Route not found" });
 });
 
 // ✅ Port

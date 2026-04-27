@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { usePopup, PopupProvider } from "../components/Popup";
 import logo from "../assets/logo.png";
@@ -12,7 +12,11 @@ function Login() {
   });
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const { popup, showAlert, closePopup } = usePopup();
+
+  // Where to go after login (set by ProtectedRoute)
+  const redirectTo = location.state?.from;
 
   const handleLogin = async () => {
     try {
@@ -27,7 +31,14 @@ function Login() {
       localStorage.setItem("isLoggedIn", "true");
 
       await showAlert("Login Successful ✅", "✅ Welcome");
-      navigate("/");
+
+      // Redirect to original page or dashboard
+      if (redirectTo) {
+        navigate(redirectTo, { replace: true });
+      } else {
+        const dashboard = res.data.role === "tutor" ? "/tutor-dashboard" : "/student-dashboard";
+        navigate(dashboard, { replace: true });
+      }
 
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.response?.data?.error || "Invalid credentials";

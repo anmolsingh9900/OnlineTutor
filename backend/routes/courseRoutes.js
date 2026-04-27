@@ -17,15 +17,25 @@ router.post("/add", upload.single("image"), async (req, res) => {
   try {
     const { tutorName, name, about, time, fee } = req.body;
 
+    console.log("📝 Course Add Request:", { tutorName, name, about, time, fee, hasImage: !!req.file });
+
     const tutor = await User.findOne({ name: tutorName });
 
     if (!tutor) {
-      return res.status(404).json({ message: "Tutor not found" });
+      console.error("❌ Tutor not found:", tutorName);
+      return res.status(404).json({ message: "Tutor not found", tutorName });
     }
 
     let imageUrl = "";
     if (req.file) {
-      imageUrl = await uploadToGitHub(req.file.buffer, req.file.originalname);
+      console.log("🖼️ Uploading image:", req.file.originalname);
+      try {
+        imageUrl = await uploadToGitHub(req.file.buffer, req.file.originalname);
+        console.log("✅ Image uploaded:", imageUrl);
+      } catch (uploadErr) {
+        console.error("❌ GitHub upload failed:", uploadErr.message);
+        return res.status(500).json({ error: "Image upload failed: " + uploadErr.message });
+      }
     }
 
     const course = new Course({
@@ -40,9 +50,15 @@ router.post("/add", upload.single("image"), async (req, res) => {
     });
 
     await course.save();
+    console.log("✅ Course saved:", course._id);
     res.json(course);
 
   } catch (err) {
+    console.error("❌ Error adding course:", {
+      message: err.message,
+      stack: err.stack,
+      name: err.name
+    });
     res.status(500).json({ error: err.message });
   }
 });

@@ -19,6 +19,12 @@ function TutorDashboard() {
 
   const [preview, setPreview] = useState(null);
 
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "https://via.placeholder.com/300x150?text=No+Image";
+    if (imagePath.startsWith("http")) return imagePath;
+    return `${import.meta.env.VITE_API_BASE_URL}${imagePath}`;
+  };
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -112,7 +118,7 @@ function TutorDashboard() {
       fee: course.fee,
     });
 
-    setPreview(`${import.meta.env.VITE_API_BASE_URL}${course.image}`);
+    setPreview(getImageUrl(course.image));
   };
 
   // 🗑 DELETE
@@ -159,11 +165,7 @@ function TutorDashboard() {
                 <h4>You haven't added any courses yet</h4>
               )}
               <img
-                src={
-                  c.image
-                    ? `${import.meta.env.VITE_API_BASE_URL}${c.image}`
-                    : "https://via.placeholder.com/300x150"
-                }
+                src={getImageUrl(c.image)}
                 alt="course"
                 className="TutorDBCourseImg"
               />
